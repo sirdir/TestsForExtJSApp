@@ -1,16 +1,19 @@
 package pages;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class AppPage extends BasePage{
 
-    LeftTree leftTree;
-    RightGrid rightGrid;
+    public LeftTree leftTree;
+    public RightGrid rightGrid;
 
-    AppPage(WebDriver driver) {
+    public AppPage(WebDriver driver) {
         super(driver);
-        leftTree = new LeftTree(driver);
-        rightGrid = new RightGrid(driver);
+        leftTree = PageFactory.initElements(driver, LeftTree.class);
+        rightGrid = PageFactory.initElements(driver, RightGrid.class);
+        wait.until(ExpectedConditions.titleIs("DD"));
     }
 
 }

@@ -3,19 +3,27 @@ package tests;
 import factory.Browser;
 import factory.DriverFactory;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.*;
+
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class BaseTest {
 
-    protected WebDriver driver;
+    WebDriver driver;
+    String url;
 
-    @BeforeSuite
+    @BeforeClass
     public void setup(){
         driver = DriverFactory.getBrowser(Browser.CHROME);
+        String[] relative = {"build", "resources", "test", "Aai", "index.html"};
+        Path path = Paths.get(new File("").getAbsolutePath(), relative);
+        url = path.toUri().toString();
+        System.out.println(url);
     }
 
-    @AfterSuite
+    @AfterClass
     public void teardown(){
         driver.quit();
     }

@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import java.util.List;
 
 public class LeftTree extends BasePage{
-    LeftTree(WebDriver driver) {
+    public LeftTree(WebDriver driver) {
         super(driver);
     }
 
