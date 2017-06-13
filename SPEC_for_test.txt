@@ -1,0 +1,11 @@
+CosiConsulting LLC QA Automation Engineer evaluation task.
+
+Alphabet application.
+1. Read the specification (Alphabet_application_specification.pdf)
+2. Unzip implementation (Alphabet_application_implementation.zip) and open index.html in the browser
+3. Verify the application implementation against the specification
+4. Use your favorite tool to create a set of automated tests for the application
+
+Artifacts you should provide us with:
+1. List of issues found during manual in a form you think is appropriate
+2. All the necessary artifacts to run the automated tests suite you created
