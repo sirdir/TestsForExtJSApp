@@ -1,5 +1,5 @@
 package tests;
 
-public class AppTest {
+public class AppTest extends BaseTest{
 
 }

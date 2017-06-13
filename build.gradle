@@ -12,4 +12,5 @@ repositories {
 dependencies {
     testCompile 'org.testng:testng:6.11'
     testCompile 'org.seleniumhq.selenium:selenium-java:3.4.0'
+    testCompile 'io.github.bonigarcia:webdrivermanager:1.6.2'
 }
