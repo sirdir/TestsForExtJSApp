@@ -69,4 +69,13 @@ public class RightGrid extends BasePage{
         List<String> classes = Arrays.asList(btnAdd.getAttribute("class").split(" "));
         return classes.contains("x-btn-disabled") && classes.contains("x-btn-default-toolbar-small-disabled");
     }
+
+    public void deleteLetter(String letter) {
+        lettersName.forEach(el -> {
+            if (el.getText().equals(letter)){
+                el.click();
+                btnDelete.click();
+            }
+        });
+    }
 }

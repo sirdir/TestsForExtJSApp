@@ -92,4 +92,12 @@ public class AppTestSingle extends BaseTest{
         softAssert.assertAll();
     }
 
+    @Test
+    public void dropDownFromTreeToGrid(){
+    }
+
+    @Test
+    public void dropDownFromGridToTree(){
+    }
+
 }

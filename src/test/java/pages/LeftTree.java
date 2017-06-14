@@ -25,6 +25,9 @@ public class LeftTree extends BasePage{
     @FindBy(id = "menuitem-1013")
     private WebElement btnAdd;
 
+    @FindBy(id = "menuitem-1014")
+    private WebElement btnDelete;
+
     public String[] getAllLetters() {
         String arr[] = new String [letters.size()];
         for (int i = 0; i < arr.length; i++) {
@@ -43,5 +46,16 @@ public class LeftTree extends BasePage{
                 .perform();
         List<String> classes = Arrays.asList(btnAdd.getAttribute("class").split(" "));
         return classes.contains("x-menu-item-disabled");
+    }
+
+    public void deleteLetter(String letter) {
+        letters.forEach(el -> {
+            if (el.getText().equals(letter)){
+                new Actions(driver)
+                        .contextClick(el)
+                        .perform();
+                btnDelete.click();
+            }
+        });
     }
 }
