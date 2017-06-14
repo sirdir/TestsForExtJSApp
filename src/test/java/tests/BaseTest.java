@@ -14,7 +14,7 @@ public class BaseTest {
     WebDriver driver;
     String url;
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void setup(){
         driver = DriverFactory.getBrowser(Browser.CHROME);
         String[] relative = {"build", "resources", "test", "Aai", "index.html"};
@@ -23,7 +23,7 @@ public class BaseTest {
         System.out.println(url);
     }
 
-    @AfterClass
+    @AfterClass(alwaysRun = true)
     public void teardown(){
         driver.quit();
     }

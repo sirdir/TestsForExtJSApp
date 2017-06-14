@@ -1,17 +1,22 @@
 package pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class RightGrid extends BasePage{
+
     public RightGrid(WebDriver driver) {
         super(driver);
     }
+
+    @FindBy(id = "gridcolumn-1020-textEl")
+    private WebElement header;
 
     @FindBy(css = "#gridview-1021-body>.x-grid-row")
     private List<WebElement> lettersRow;
@@ -22,10 +27,10 @@ public class RightGrid extends BasePage{
     @FindBy(css = "#gridview-1021-body .x-grid-cell-inner>div")
     private List<WebElement> chbLetters;
 
-    @FindBy(css = "#button-1023")
+    @FindBy(id = "button-1023")
     private WebElement btnAdd;
 
-    @FindBy(css = "#button-1024")
+    @FindBy(id = "button-1024")
     private WebElement btnDelete;
 
     public void selectByName(String letter){
@@ -48,4 +53,20 @@ public class RightGrid extends BasePage{
         Select selcet = new Select(btnAdd);
     }
 
+    public String[] getAllLetters() {
+        String arr[] = new String [lettersName.size()];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = lettersName.get(i).getText();
+        }
+        return arr;
+    }
+
+    public String getHeaderText() {
+        return header.getText();
+    }
+
+    public boolean isAddDisabled() {
+        List<String> classes = Arrays.asList(btnAdd.getAttribute("class").split(" "));
+        return classes.contains("x-btn-disabled") && classes.contains("x-btn-default-toolbar-small-disabled");
+    }
 }

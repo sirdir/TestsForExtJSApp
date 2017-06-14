@@ -9,22 +9,22 @@
 
 <h3>Test cases</h3>
 1. 35%
-1. adaptive page layout
-1. sorting tree
-1. sorting grid
-1. english alphabet
-1. english letters
-9. disable add button if nothing to add
-1. drop-down tree -> grid
-2. drop-down grid -> tree
-3. delete from tree
-4. delete from grid
-5. add to grid(by selecting)
-6. add to grid(by typing)
-7. add to tree(by selecting)
-8. add to tree(by typing)
-9. multi-select work with grid
-9. add window validation???
+2. adaptive page layout
+3. sorting tree
+4. sorting grid
+5. english alphabet
+6. english letters
+7. disable add button if nothing to add
+8. drop-down tree -> grid
+9. drop-down grid -> tree
+10. delete from tree
+11. delete from grid
+12. add to grid(by selecting)
+13. add to grid(by typing)
+14. add to tree(by selecting)
+15. add to tree(by typing)
+16. multi-select work with grid
+17. add window validation???
 
 <h3>Run tests</h3>
 <code>./gradlew clean test</code>
