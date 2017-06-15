@@ -33,32 +33,28 @@ public class AppTest extends BaseTest{
         driver.manage().window().maximize();
         driver.get(url);
     }
-
-    private int borders = 30;
-    private Dimension smallDimension = new Dimension( 600+borders, 500);
-    private Dimension bigDimension = new Dimension( 1920, 1080);
+    private Dimension smallDimension = new Dimension( 600, 500);
+    private Dimension bigDimension = new Dimension( 1600, 1050);
 
     @Test
-    public void adaptiveLayout(){
-        appPage.getTreeWidth();
-        appPage.getGridWidth();
-        appPage.getPageWidth();
-        driver.manage().window().setSize(bigDimension);
-        Assert.assertEquals(appPage.getPageWidth(), driver.manage().window().getSize().getWidth());
+    public void adaptiveLayout(){ //todo moget ego naxuy
+        setPageSize(smallDimension);
 
-        driver.manage().window().setSize(smallDimension);
+        int expTreeWidth = (int)(0.35 * (appPage.getPageWidth()));
+        int expGridWidth = (int)(0.65 * (appPage.getPageWidth()));
+        Assert.assertEquals(appPage.getTreeWidth(), expTreeWidth, "tree size not match 35% of width");
+        Assert.assertEquals(appPage.getGridWidth(), expGridWidth, "grid size not match 65% of width");
+        setPageSize(bigDimension);
 
+        expTreeWidth = (int)(0.35 * (appPage.getPageWidth()));
+        expGridWidth = (int)(0.65 * (appPage.getPageWidth()));
+        Assert.assertEquals(appPage.getTreeWidth(), expTreeWidth, "tree size not match 35% of width");
+        Assert.assertEquals(appPage.getGridWidth(), expGridWidth, "grid size not match 65% of width");
 
-        new WebDriverWait(driver, 10).until(new ExpectedCondition<Boolean> () {
-            @Override
-            public Boolean apply(WebDriver input) {
-                return appPage.getPageWidth() == smallDimension.getWidth();
-            }
-        });
-        int expTreeWidth = (int)(0.35 * (appPage.getPageWidth() - borders));
-        int expGridWidth = (int)(0.65 * (appPage.getPageWidth() - borders));
-        System.out.println(appPage.getPageWidth());
-        Assert.assertEquals(appPage.getPageWidth(), smallDimension.getWidth());
+        setPageSize(smallDimension);
+
+        expTreeWidth = (int)(0.35 * (appPage.getPageWidth()));
+        expGridWidth = (int)(0.65 * (appPage.getPageWidth()));
         Assert.assertEquals(appPage.getTreeWidth(), expTreeWidth, "tree size not match 35% of width");
         Assert.assertEquals(appPage.getGridWidth(), expGridWidth, "grid size not match 65% of width");
     }

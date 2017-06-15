@@ -1,5 +1,6 @@
 package pages;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -28,8 +29,6 @@ public class AppPage extends BasePage{
     @FindBy(id = "dd-grid-1018")
     private WebElement grid;
 
-    @FindBy(id = "app-main-1010")
-    private WebElement page;
 
     public int getTreeWidth() {
         return getIntValue(tree);
@@ -39,8 +38,8 @@ public class AppPage extends BasePage{
         return getIntValue(grid);
     }
 
-    public int getPageWidth() {
-        return getIntValue(page);
+    public long getPageWidth() {
+        return (long) ((JavascriptExecutor)driver).executeScript("return window.innerWidth");
     }
 
     private int getIntValue(WebElement el){

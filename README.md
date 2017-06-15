@@ -8,23 +8,22 @@
 5. When drop-down multiply lines from grid to tree all letters instead of first will have wrong icon
 
 <h3>Test cases</h3>
-1. 35%
-2. adaptive page layout
-3. sorting tree
-4. sorting grid
-5. english alphabet
-6. english letters
-7. disable add button if nothing to add
-8. drop-down tree -> grid
-9. drop-down grid -> tree
-10. delete from tree
-11. delete from grid
-12. add to grid(by selecting)
-13. add to grid(by typing)
-14. add to tree(by selecting)
-15. add to tree(by typing)
-16. multi-select work with grid
-17. add window validation???
+1. adaptive page layout
+2. sorting tree
+3. sorting grid
+4. english alphabet
+5. english letters
+6. disable add button if nothing to add
+7. drop-down tree -> grid
+8. drop-down grid -> tree
+9. delete from tree
+10. delete from grid
+11. add to grid(by selecting)
+12. add to grid(by typing)
+13. add to tree(by selecting)
+14. add to tree(by typing)
+15. multi-select work with grid
+16. add window validation???
 
 <h3>Run tests</h3>
 <code>./gradlew clean test</code>
