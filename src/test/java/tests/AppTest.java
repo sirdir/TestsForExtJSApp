@@ -197,10 +197,10 @@ public class AppTest extends BaseTest{
 
     @Test(dependsOnMethods = "deleteGrid", dataProvider = "gridLetters")
     public void addWindowValidation(String letter1, String letter2, String letter3){
-        String invalidLetter = letter1 + letter2 + letter3
+        String invalidLetter = letter1 + letter2 + letter3;
         appPage.rightGrid.deleteLetter(letter1);
         appPage.rightGrid.addLetter(invalidLetter);
-        Assert.assertTrue(appPage.popup.isPopupValidationInvalid(), "input field in popup don't have any highlighting");
+        Assert.assertTrue(appPage.popup.isPopupValidationInvalid(), "input field in popup don't have any highllighting");
     }
 
 

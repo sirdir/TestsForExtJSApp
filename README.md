@@ -4,6 +4,9 @@
 <p>for Windows <code>gradlew clean test</code></p>
 <p>for Unix <code>./gradlew clean test</code></p>
 
+<h3>Test results</h3>
+In root folder of project ./build/reports/tests/index.html
+
 
 <h3>Bugs</h3>
 1. Grid have default ascending sorting instead of descending
