@@ -2,8 +2,8 @@
 
 <h3>Bugs</h3>
 1. Grid have default ascending sorting instead of descending
-2. When adding new letter to grid, you can choose letter from drop down and add space, after clicking button ADD empty row will be added to grid
-3. When adding new letter, print letter(don't choose from dropdown),  click button ADD, after that button ADD disappear(in both places, grid and tree)
+2. When adding new letter, you can choose letter from drop down and add print additional space, after clicking button ADD empty row will be added
+3. When adding new letter, print letter(don't choose from dropdown),  click button ADD, letter added to tree/grid after that button ADD disappear in tree/grid
 4. Letters that was add to tree, appears in grid
 5. When drop-down multiply lines from grid to tree all letters instead of first will have wrong icon
 

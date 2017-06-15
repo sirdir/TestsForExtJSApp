@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -66,5 +67,13 @@ public class LeftTree extends BasePage{
                         .perform();
             }
         });
+    }
+
+    public void addLetterSelectBug(String letter) {
+        btnAdd.click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("add-letter-1027")));
+        WebElement input = driver.findElement(By.id("combo-1029-inputEl"));
+        List<WebElement> listLettersToAdd = driver.findElements(By.cssSelector(".x-boundlist-list-ct>ul>li"));
+        WebElement ddAdd = driver.findElement(By.id("button-1031"));
     }
 }

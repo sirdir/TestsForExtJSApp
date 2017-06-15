@@ -47,12 +47,11 @@ public class RightGrid extends BasePage{
 
     }
 
-    public void addLetterBySelect(String letter){
+    public void addLetterSelectBug(String letter){
         btnAdd.click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("add-letter-1028")));
         WebElement ddAdd = driver.findElement(By.id("ext-gen1216"));
         List<WebElement> listLettersToAdd = driver.findElements(By.cssSelector("#boundlist-1035-listEl>ul>li"));
-
     }
 
     public List getAllLetters() {
@@ -115,5 +114,8 @@ public class RightGrid extends BasePage{
     public void deleteMultipleLetters(List<String> list) {
         int lastRow = selectMultipleLetters((String[]) list.toArray());
         btnDelete.click();
+    }
+
+    public void addLetter(String letter) {
     }
 }
