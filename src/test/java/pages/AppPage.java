@@ -1,15 +1,10 @@
 package pages;
 
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import pages.pageblocks.LeftTree;
 import pages.pageblocks.RightGrid;
-
-import javax.swing.*;
 
 public class AppPage extends BasePage{
 
@@ -23,28 +18,4 @@ public class AppPage extends BasePage{
     public LeftTree leftTree;
     public RightGrid rightGrid;
 
-    @FindBy(id = "dd-tree-1011")
-    private WebElement tree;
-
-    @FindBy(id = "dd-grid-1018")
-    private WebElement grid;
-
-
-    public int getTreeWidth() {
-        return getIntValue(tree);
-    }
-
-    public int getGridWidth() {
-        return getIntValue(grid);
-    }
-
-    public long getPageWidth() {
-        return (long) ((JavascriptExecutor)driver).executeScript("return window.innerWidth");
-    }
-
-    private int getIntValue(WebElement el){
-        String width = el.getCssValue("width");
-        width = width.substring(0, width.length()-2);
-        return Integer.valueOf(width);
-    }
 }

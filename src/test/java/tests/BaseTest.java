@@ -2,14 +2,9 @@ package tests;
 
 import factory.Browser;
 import factory.DriverFactory;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -36,32 +31,4 @@ public class BaseTest {
         driver.quit();
     }
 
-
-    void setPageSize(Dimension dimension) {
-        long before = (long) ((JavascriptExecutor)driver).executeScript("return window.innerWidth");
-        driver.manage().window().setSize(dimension);
-        new WebDriverWait(driver, 10)
-                .until((ExpectedCondition<Boolean>) input ->
-                        input.manage().window().getSize().getWidth() == dimension.getWidth()
-                );
-        new WebDriverWait(driver, 10)
-                .until((ExpectedCondition<Boolean>) input ->
-                        before != (long) ((JavascriptExecutor)input).executeScript("return window.innerWidth")
-                );
-        new WebDriverWait(driver, 10).until(                new ExpectedCondition<Boolean>() {
-                    private long after;
-
-                    @Override
-                    public Boolean apply(WebDriver input) {
-                        after = (long) ((JavascriptExecutor)input).executeScript("return window.innerWidth");
-                        return after != before;
-                    }
-
-                    @Override
-                    public String toString() {
-                        return String.format("title to contain \"%d\". Current title: \"%d\"", after, before);
-                    }
-                });
-
-    }
 }

@@ -33,31 +33,6 @@ public class AppTest extends BaseTest{
         driver.manage().window().maximize();
         driver.get(url);
     }
-    private Dimension smallDimension = new Dimension( 600, 500);
-    private Dimension bigDimension = new Dimension( 1600, 1050);
-
-    @Test
-    public void adaptiveLayout(){ //todo moget ego naxuy
-        setPageSize(smallDimension);
-
-        int expTreeWidth = (int)(0.35 * (appPage.getPageWidth()));
-        int expGridWidth = (int)(0.65 * (appPage.getPageWidth()));
-        Assert.assertEquals(appPage.getTreeWidth(), expTreeWidth, "tree size not match 35% of width");
-        Assert.assertEquals(appPage.getGridWidth(), expGridWidth, "grid size not match 65% of width");
-        setPageSize(bigDimension);
-
-        expTreeWidth = (int)(0.35 * (appPage.getPageWidth()));
-        expGridWidth = (int)(0.65 * (appPage.getPageWidth()));
-        Assert.assertEquals(appPage.getTreeWidth(), expTreeWidth, "tree size not match 35% of width");
-        Assert.assertEquals(appPage.getGridWidth(), expGridWidth, "grid size not match 65% of width");
-
-        setPageSize(smallDimension);
-
-        expTreeWidth = (int)(0.35 * (appPage.getPageWidth()));
-        expGridWidth = (int)(0.65 * (appPage.getPageWidth()));
-        Assert.assertEquals(appPage.getTreeWidth(), expTreeWidth, "tree size not match 35% of width");
-        Assert.assertEquals(appPage.getGridWidth(), expGridWidth, "grid size not match 65% of width");
-    }
 
     @Test
     public void treeAscendingSort(){
