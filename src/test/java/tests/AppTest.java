@@ -1,15 +1,11 @@
 package tests;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import pages.AppPage;
@@ -21,6 +17,42 @@ import java.util.List;
 public class AppTest extends BaseTest{
 
     private AppPage appPage;
+
+    @DataProvider
+    public static Object[][] treeToGrid() {
+        return new Object[][]{
+                {new String[] {"B", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"}, "B"},
+
+        };
+    }
+
+    @DataProvider
+    public static Object[][] gridToTree() {
+        return new Object[][]{
+                {new String[] {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "U"}, "U"},
+        };
+    }
+
+    @DataProvider
+    public static Object[][] multiGridToTree() {
+        return new Object[][]{
+                {new String[] {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "U", "Z"}, new String[] {"K", "U", "Z"}},
+        };
+    }
+
+    @DataProvider
+    public static Object[][] treeLetters() {
+        return new Object[][]{
+                {"A", "B"}
+        };
+    }
+
+    @DataProvider
+    public static Object[][] gridLetters() {
+        return new Object[][]{
+                {"Z", "U", "K"}
+        };
+    }
 
     @BeforeClass
     public void basicSetup(){
@@ -69,92 +101,67 @@ public class AppTest extends BaseTest{
         softAssert.assertAll();
     }
 
-    @Test
-    public void dropDownFromTreeToGrid(){//todo params
-        String expLetters[] = {"Z", "Y", "X", "W", "V", "U", "T", "S", "R", "Q", "P", "O", "N", "M", "L", "K", "B"};
-        ArrayUtils.reverse(expLetters);
-        String letterB = "B";
-        appPage.leftTree.moveLetterToGrid(letterB);
+    @Test(dataProvider = "treeToGrid")
+    public void dropDownFromTreeToGrid(String expLetters[], String letter){
+        appPage.leftTree.moveLetterToGrid(letter);
         Assert.assertEquals(appPage.rightGrid.getAllLetters().toArray(), expLetters);
     }
 
-    @Test
-    public void dropDownFromGridToTree(){//todo params
-        String expLetters[] = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "U"};
-        String letterU = "U";
-        appPage.rightGrid.moveLetterToTree(letterU);
+    @Test(dataProvider = "gridToTree")
+    public void dropDownFromGridToTree(String expLetters[], String letter){
+        appPage.rightGrid.moveLetterToTree(letter);
         Assert.assertEquals(appPage.leftTree.getAllLetters().toArray(), expLetters);
     }
 
-    @Test
-    public void multipleDropDownFromGridToTree(){ //todo params
-        String expLetters[] = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "U", "Z"};
-        appPage.rightGrid.moveMultipleLettersToTree("K", "U", "Z");
+    @Test(dataProvider = "multiGridToTree")
+    public void multipleDropDownFromGridToTree(String expLetters[], String toMove[]){
+        appPage.rightGrid.moveMultipleLettersToTree(toMove);
         Assert.assertEquals(appPage.leftTree.getAllLetters().toArray(), expLetters);
     }
 
-    @Test
-    public void deleteTree(){//todo params
+    @Test(dataProvider = "treeLetters")
+    public void deleteTree(String letter1, String letter2){
         driver.get(url);
-        String letterA = "A";
         List before = appPage.leftTree.getAllLetters();
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertTrue(before.contains(letterA), "tree doesn't contains '" + letterA + "' ;");
-        appPage.leftTree.deleteLetter(letterA);
-        softAssert.assertFalse(before.contains(letterA), "letter '" + letterA + "' wasn't deleted from tree;");
+        softAssert.assertTrue(before.contains(letter1), "tree doesn't contains '" + letter1 + "' ;");
+        appPage.leftTree.deleteLetter(letter1);
+        softAssert.assertFalse(before.contains(letter1), "letter '" + letter1 + "' wasn't deleted from tree;");
         List after = appPage.leftTree.getAllLetters();
-        softAssert.assertTrue(after.contains(letterA));
+        softAssert.assertTrue(after.contains(letter1));
     }
 
-    @Test(dependsOnMethods = "deleteTree")
-    public void addLetterToTree(){//todo params
-        String letterA = "A";
-        List before = appPage.leftTree.getAllLetters();
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertTrue(before.contains(letterA), "tree doesn't contains '" + letterA + "' ;");
-        appPage.leftTree.deleteLetter(letterA);
-        before = appPage.leftTree.getAllLetters();
-        softAssert.assertFalse(before.contains(letterA), "letter '" + letterA + "' wasn't deleted from tree;");
-        appPage.leftTree.addLetter(letterA);
+    @Test(dependsOnMethods = "deleteTree", dataProvider = "treeLetters")
+    public void addLetterToTree(String letter1, String letter2){
+        appPage.leftTree.deleteLetter(letter1);
+        appPage.leftTree.addLetter(letter1);
         List after = appPage.leftTree.getAllLetters();
-        softAssert.assertTrue(after.contains(letterA), "letter '" + letterA + "' wasn't added to tree;");
-        softAssert.assertAll();
-    }
+        Assert.assertTrue(after.contains(letter1), "letter '" + letter1 + "' wasn't added to tree;");   }
 
-    @Test(dependsOnMethods = "deleteTree")
-    public void addLetterToTreeBug(){//todo params
-        String letterA = "A";
-        String letterB = "B";
-        List before = appPage.leftTree.getAllLetters();
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertTrue(before.contains(letterA), "tree doesn't contains '" + letterA + "' ;");
-        softAssert.assertTrue(before.contains(letterB), "tree doesn't contains '" + letterB + "' ;");
-        appPage.leftTree.deleteLetter(letterA);
-        appPage.leftTree.deleteLetter(letterB);
-        before = appPage.leftTree.getAllLetters();
-        softAssert.assertFalse(before.contains(letterA), "letter '" + letterA + "' wasn't deleted from tree;");
-        softAssert.assertFalse(before.contains(letterB), "letter '" + letterB + "' wasn't deleted from tree;");
-        appPage.leftTree.addLetterSelectBug(letterA);
+    @Test(dependsOnMethods = "deleteTree", dataProvider = "treeLetters")
+    public void addLetterToTreeBug(String letter1, String letter2){
+        appPage.leftTree.deleteLetter(letter1);
+        appPage.leftTree.deleteLetter(letter2);
+        appPage.leftTree.addLetterSelectBug(letter1);
         List after = appPage.leftTree.getAllLetters();
-        softAssert.assertTrue(after.contains(letterA), "letter '" + letterA + "' wasn't added to tree;");
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertTrue(after.contains(letter1), "letter '" + letter1 + "' wasn't added to tree;");
         softAssert.assertFalse(appPage.leftTree.isAddDisabled(), "button ADD id disable instead of enable;");
         softAssert.assertAll();
     }
 
-    @Test
-    public void deleteGrid(){//todo params
-        String letterZ = "Z";
+    @Test(dataProvider = "gridLetters")
+    public void deleteGrid(String letter1, String letter2, String letter3){
         List before = appPage.rightGrid.getAllLetters();
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertTrue(before.contains(letterZ), "tree doesn't contains '" + letterZ + "' ;");
-        appPage.rightGrid.deleteLetter(letterZ);
+        softAssert.assertTrue(before.contains(letter1), "tree doesn't contains '" + letter1 + "' ;");
+        appPage.rightGrid.deleteLetter(letter1);
         before = appPage.rightGrid.getAllLetters();
-        softAssert.assertFalse(before.contains(letterZ), "letter '" + letterZ + "' wasn't deleted from grid;");
+        softAssert.assertFalse(before.contains(letter1), "letter '" + letter1 + "' wasn't deleted from grid;");
     }
 
-    @Test
-    public void multiDeleteGrid(){//todo params
-        String arr[] = {"K", "U", "Z"};
+    @Test(dataProvider = "gridLetters")
+    public void multiDeleteGrid(String... arr){
         List<String> toDel = Arrays.asList(arr);
         List before = appPage.rightGrid.getAllLetters();
         appPage.rightGrid.deleteMultipleLetters(toDel);
@@ -168,44 +175,32 @@ public class AppTest extends BaseTest{
         Assert.assertEquals(after, before);
     }
 
-    @Test(dependsOnMethods = "deleteGrid")
-    public void addLetterToGrid(){//todo params
-        String letterZ = "Z";
-        List before = appPage.rightGrid.getAllLetters();
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertTrue(before.contains(letterZ), "tree doesn't contains '" + letterZ + "' ;");
-        appPage.rightGrid.deleteLetter(letterZ);
-        before = appPage.rightGrid.getAllLetters();
-        softAssert.assertFalse(before.contains(letterZ), "letter '" + letterZ + "' wasn't deleted from grid;");
-        appPage.rightGrid.addLetter(letterZ);
+    @Test(dependsOnMethods = "deleteGrid", dataProvider = "gridLetters")
+    public void addLetterToGrid(String letter1, String letter2, String letter3){
+        appPage.rightGrid.deleteLetter(letter1);
+        appPage.rightGrid.addLetter(letter1);
         List after = appPage.rightGrid.getAllLetters();
-        softAssert.assertTrue(after.contains(letterZ), "letter '" + letterZ + "' wasn't added to grid;");
-        softAssert.assertAll();
+        Assert.assertTrue(after.contains(letter1), "letter '" + letter1 + "' wasn't added to grid;");
     }
 
-    @Test(dependsOnMethods = "deleteGrid")
-    public void addLetterToGridBug(){//todo params
-        String letterO = "O";
-        String letterZ = "Z";
-        List before = appPage.rightGrid.getAllLetters();
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertTrue(before.contains(letterO), "tree doesn't contains '" + letterO + "' ;");
-        softAssert.assertTrue(before.contains(letterZ), "tree doesn't contains '" + letterZ + "' ;");
-        appPage.rightGrid.deleteLetter(letterO);
-        appPage.rightGrid.deleteLetter(letterZ);
-        before = appPage.rightGrid.getAllLetters();
-        softAssert.assertFalse(before.contains(letterO), "letter '" + letterO + "' wasn't deleted from grid;");
-        softAssert.assertFalse(before.contains(letterZ), "letter '" + letterZ + "' wasn't deleted from grid;");
-        appPage.rightGrid.addLetterSelectBug(letterO);
+    @Test(dependsOnMethods = "deleteGrid", dataProvider = "gridLetters")
+    public void addLetterToGridBug(String letter1, String letter2, String letter3){
+        appPage.rightGrid.deleteLetter(letter2);
+        appPage.rightGrid.deleteLetter(letter1);
+        appPage.rightGrid.addLetterSelectBug(letter2);
         List after = appPage.rightGrid.getAllLetters();
-        softAssert.assertTrue(after.contains(letterO), "letter '" + letterO + "' wasn't added to gird;");
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertTrue(after.contains(letter2), "letter '" + letter2 + "' wasn't added to gird;");
         softAssert.assertFalse(appPage.rightGrid.isAddDisabled(), "button ADD id disable instead of enable;");
         softAssert.assertAll();
     }
 
-    @Test
-    public void addWindowValidation(){//todo params
-        //??
+    @Test(dependsOnMethods = "deleteGrid", dataProvider = "gridLetters")
+    public void addWindowValidation(String letter1, String letter2, String letter3){
+        String invalidLetter = letter1 + letter2 + letter3
+        appPage.rightGrid.deleteLetter(letter1);
+        appPage.rightGrid.addLetter(invalidLetter);
+        Assert.assertTrue(appPage.popup.isPopupValidationInvalid(), "input field in popup don't have any highlighting");
     }
 
 

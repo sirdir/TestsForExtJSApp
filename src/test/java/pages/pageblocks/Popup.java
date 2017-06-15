@@ -28,7 +28,7 @@ public class Popup extends BasePage {
     private WebElement btnAdd;
 
 
-    public void addLetter(String letter) {
+    void addLetter(String letter) {
         ddAdd.click();
         listLettersToAdd.forEach(el -> {
             if (el.getText().equals(letter)){
@@ -38,7 +38,7 @@ public class Popup extends BasePage {
         btnAdd.click();
     }
 
-    public void addLetterBug(String letter) {
+    void addLetterBug(String letter) {
         input.sendKeys(letter);
         listLettersToAdd.forEach(el -> {
             if (el.getText().equals(letter)){
@@ -47,5 +47,9 @@ public class Popup extends BasePage {
         });
         input.sendKeys(" ");
         btnAdd.click();
+    }
+
+    public boolean isPopupValidationInvalid(){
+        return Boolean.valueOf(input.getAttribute("aria-invalid"));
     }
 }
