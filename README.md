@@ -1,11 +1,11 @@
 #TestsForExtJSApp
 
 <h3>Bugs</h3>
-1. Can't drop-down from grid to tree
-2. Grid have default ascending sorting instead of descending
-3. When adding new letter to grid, you can choose letter from drop down and add space, after clicking button ADD empty row will be added to grid
-4. When adding new letter, print letter(don't choose from dropdown),  click button ADD, after that button ADD disappear(in both places, grid and tree)
-5. Letters that was add to tree, appears in grid
+1. Grid have default ascending sorting instead of descending
+2. When adding new letter to grid, you can choose letter from drop down and add space, after clicking button ADD empty row will be added to grid
+3. When adding new letter, print letter(don't choose from dropdown),  click button ADD, after that button ADD disappear(in both places, grid and tree)
+4. Letters that was add to tree, appears in grid
+5. When drop-down multiply lines from grid to tree all letters instead of first will have wrong icon
 
 <h3>Test cases</h3>
 1. 35%

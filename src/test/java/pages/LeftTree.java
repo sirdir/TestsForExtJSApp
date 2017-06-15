@@ -1,5 +1,6 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
@@ -16,7 +17,7 @@ public class LeftTree extends BasePage{
         super(driver);
     }
 
-    @FindBy(css = ".x-grid-tree-node-leaf")
+    @FindBy(xpath = "//tr[contains(@id, 'treeview-1017-record-ext-record')]")
     List<WebElement> letters;
 
     @FindBy(id = "ext-gen1061")
@@ -28,11 +29,9 @@ public class LeftTree extends BasePage{
     @FindBy(id = "menuitem-1014")
     private WebElement btnDelete;
 
-    public String[] getAllLetters() {
-        String arr[] = new String [letters.size()];
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = letters.get(i).getText();
-        }
+    public List getAllLetters() {
+        ArrayList<String> arr = new ArrayList<>(letters.size());
+        letters.forEach(el -> arr.add(el.getText()));
         return arr;
     }
 
@@ -55,6 +54,16 @@ public class LeftTree extends BasePage{
                         .contextClick(el)
                         .perform();
                 btnDelete.click();
+            }
+        });
+    }
+
+    public void moveLetterToGrid(String letter) {
+        letters.forEach(el -> {
+            if (el.getText().equals(letter)){
+                new Actions(driver)
+                        .dragAndDrop(el, driver.findElement(By.id("dd-grid-1018-body")))
+                        .perform();
             }
         });
     }

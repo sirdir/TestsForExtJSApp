@@ -1,11 +1,14 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,25 +42,22 @@ public class RightGrid extends BasePage{
                 webElement.click();
             }
         });
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
     public void selectByNames(String... letters){
 
     }
 
-    public void addLetter(){
-        Select selcet = new Select(btnAdd);
+    public void addLetterBySelect(String letter){
+        btnAdd.click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("add-letter-1028")));
+        WebElement ddAdd = driver.findElement(By.id("ext-gen1216"));
+        List<WebElement> listLettersToAdd = driver.findElements(By.cssSelector("#boundlist-1035-listEl>ul>li"));
+
     }
 
-    public String[] getAllLetters() {
-        String arr[] = new String [lettersName.size()];
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = lettersName.get(i).getText();
-        }
+    public List getAllLetters() {
+        ArrayList<String> arr = new ArrayList<>(lettersName.size());
+        lettersName.forEach(el -> arr.add(el.getText()));
         return arr;
     }
 
@@ -77,5 +77,43 @@ public class RightGrid extends BasePage{
                 btnDelete.click();
             }
         });
+    }
+
+    public void moveLetterToTree(String letter) {
+        lettersName.forEach(el -> {
+            if (el.getText().equals(letter)){
+                new Actions(driver)
+                        .dragAndDrop(el, driver.findElement(By.id("treeview-1017-body")))
+                        .perform();
+            }
+        });
+    }
+
+    public void moveMultipleLettersToTree(String... letters) {
+        int lastRow = selectMultipleLetters(letters);
+        new Actions(driver)
+                .dragAndDrop(lettersRow.get(lastRow), driver.findElement(By.id("treeview-1017-body")))
+                .perform();
+    }
+
+    private int selectMultipleLetters(String... letters){
+        int lastRow = -1;
+        for (int i = 0; i < lettersName.size(); i++) {
+            if (Arrays.asList(letters).contains(lettersName.get(i).getText())){
+                chbLetters.get(i).click();
+                lastRow = i;
+            }
+        }
+        return lastRow;
+    }
+
+    public void deleteMultipleLetters(String... letters) {
+        int lastRow = selectMultipleLetters(letters);
+        btnDelete.click();
+    }
+
+    public void deleteMultipleLetters(List<String> list) {
+        int lastRow = selectMultipleLetters((String[]) list.toArray());
+        btnDelete.click();
     }
 }

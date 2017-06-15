@@ -1,5 +1,6 @@
 package tests;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -61,8 +62,8 @@ public class AppTestSingle extends BaseTest{
     public void treeAscendingSort(){
         String expLetters[] = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEqualsNoOrder(appPage.leftTree.getAllLetters(), expLetters, "wrong letters in tree");
-        softAssert.assertEquals(appPage.leftTree.getAllLetters(), expLetters, "wrong order of letters in tree");
+        softAssert.assertEqualsNoOrder(appPage.leftTree.getAllLetters().toArray(), expLetters, "wrong letters in tree");
+        softAssert.assertEquals(appPage.leftTree.getAllLetters().toArray(), expLetters, "wrong order of letters in tree");
         softAssert.assertAll();
     }
 
@@ -71,8 +72,8 @@ public class AppTestSingle extends BaseTest{
         String expLetters[] = {"Z", "Y", "X", "W", "V", "U", "T", "S", "R", "Q", "P", "O", "N", "M", "L", "K"};
         AppPage appPage = PageFactory.initElements(driver, AppPage.class);
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEqualsNoOrder(appPage.rightGrid.getAllLetters(), expLetters, "wrong letters in grid");
-        softAssert.assertEquals(appPage.rightGrid.getAllLetters(), expLetters, "wrong order of letters in grid");
+        softAssert.assertEqualsNoOrder(appPage.rightGrid.getAllLetters().toArray(), expLetters, "wrong letters in grid");
+        softAssert.assertEquals(appPage.rightGrid.getAllLetters().toArray(), expLetters, "wrong order of letters in grid");
         softAssert.assertAll();
     }
 
@@ -94,10 +95,29 @@ public class AppTestSingle extends BaseTest{
 
     @Test
     public void dropDownFromTreeToGrid(){
+        String expLetters[] = {"Z", "Y", "X", "W", "V", "U", "T", "S", "R", "Q", "P", "O", "N", "M", "L", "K", "B"};
+        ArrayUtils.reverse(expLetters);
+        appPage.leftTree.moveLetterToGrid("B");
+        Assert.assertEquals(appPage.rightGrid.getAllLetters(), expLetters);
     }
 
     @Test
     public void dropDownFromGridToTree(){
+        String expLetters[] = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "U"};
+        appPage.rightGrid.moveLetterToTree("U");
+        Assert.assertEquals(appPage.leftTree.getAllLetters(), expLetters);
+    }
+
+    @Test
+    public void multipleDropDownFromGridToTree(){
+        String expLetters[] = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "U", "Z"};
+        appPage.rightGrid.moveMultipleLettersToTree("K", "U", "Z");
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Assert.assertEquals(appPage.leftTree.getAllLetters(), expLetters);
     }
 
 }
