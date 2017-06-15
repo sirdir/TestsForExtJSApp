@@ -1,21 +1,25 @@
-package pages;
+package pages.pageblocks;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import pages.BasePage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class LeftTree extends BasePage{
+public class LeftTree extends BasePage {
+
+    private Popup popup;
 
     public LeftTree(WebDriver driver) {
         super(driver);
+        popup = PageFactory.initElements(driver, Popup.class);
     }
 
     @FindBy(xpath = "//tr[contains(@id, 'treeview-1017-record-ext-record')]")
@@ -70,10 +74,22 @@ public class LeftTree extends BasePage{
     }
 
     public void addLetterSelectBug(String letter) {
-        btnAdd.click();
+        new Actions(driver)
+                .contextClick(header)
+                .perform();
+        wait.until(ExpectedConditions.elementToBeClickable(btnAdd))
+                .click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("add-letter-1027")));
-        WebElement input = driver.findElement(By.id("combo-1029-inputEl"));
-        List<WebElement> listLettersToAdd = driver.findElements(By.cssSelector(".x-boundlist-list-ct>ul>li"));
-        WebElement ddAdd = driver.findElement(By.id("button-1031"));
+        popup.addLetterBug(letter);
+    }
+
+    public void addLetter(String letter) {
+        new Actions(driver)
+                .contextClick(header)
+                .perform();
+        wait.until(ExpectedConditions.elementToBeClickable(btnAdd))
+                .click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("add-letter-1027")));
+        popup.addLetter(letter);
     }
 }

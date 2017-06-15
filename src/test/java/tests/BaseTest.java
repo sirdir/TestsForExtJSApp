@@ -8,6 +8,7 @@ import org.testng.annotations.*;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.concurrent.TimeUnit;
 
 public class BaseTest {
 
@@ -19,6 +20,7 @@ public class BaseTest {
         driver = DriverFactory.getBrowser(Browser.CHROME);
         String[] relative = {"build", "resources", "test", "Aai", "index.html"};
         Path path = Paths.get(new File("").getAbsolutePath(), relative);
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
         url = path.toUri().toString();
         System.out.println(url);
     }

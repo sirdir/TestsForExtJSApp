@@ -1,21 +1,26 @@
-package pages;
+package pages.pageblocks;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import pages.BasePage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class RightGrid extends BasePage{
+public class RightGrid extends BasePage {
+
+    private Popup popup;
 
     public RightGrid(WebDriver driver) {
         super(driver);
+        popup = PageFactory.initElements(driver, Popup.class);
     }
 
     @FindBy(id = "gridcolumn-1020-textEl")
@@ -47,12 +52,6 @@ public class RightGrid extends BasePage{
 
     }
 
-    public void addLetterSelectBug(String letter){
-        btnAdd.click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("add-letter-1028")));
-        WebElement ddAdd = driver.findElement(By.id("ext-gen1216"));
-        List<WebElement> listLettersToAdd = driver.findElements(By.cssSelector("#boundlist-1035-listEl>ul>li"));
-    }
 
     public List getAllLetters() {
         ArrayList<String> arr = new ArrayList<>(lettersName.size());
@@ -116,6 +115,19 @@ public class RightGrid extends BasePage{
         btnDelete.click();
     }
 
-    public void addLetter(String letter) {
+
+    public void addLetterSelectBug(String letter) {
+        selectMultipleLetters(letter);
+        btnAdd.click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("add-letter-1027")));
+        popup.addLetterBug(letter);
     }
+
+    public void addLetter(String letter) {
+        selectMultipleLetters(letter);
+        btnAdd.click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("add-letter-1027")));
+        popup.addLetter(letter);
+    }
+
 }
