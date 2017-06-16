@@ -1,11 +1,9 @@
 package tests;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import pages.AppPage;
@@ -18,41 +16,6 @@ public class AppTest extends BaseTest{
 
     private AppPage appPage;
 
-    @DataProvider
-    public static Object[][] treeToGrid() {
-        return new Object[][]{
-                {new String[] {"B", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"}, "B"},
-
-        };
-    }
-
-    @DataProvider
-    public static Object[][] gridToTree() {
-        return new Object[][]{
-                {new String[] {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "U"}, "U"},
-        };
-    }
-
-    @DataProvider
-    public static Object[][] multiGridToTree() {
-        return new Object[][]{
-                {new String[] {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "U", "Z"}, new String[] {"K", "U", "Z"}},
-        };
-    }
-
-    @DataProvider
-    public static Object[][] treeLetters() {
-        return new Object[][]{
-                {"A", "B"}
-        };
-    }
-
-    @DataProvider
-    public static Object[][] gridLetters() {
-        return new Object[][]{
-                {"Z", "U", "K"}
-        };
-    }
 
     @BeforeClass
     public void basicSetup(){

@@ -5,6 +5,7 @@ import factory.DriverFactory;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -30,5 +31,42 @@ public class BaseTest {
     public void teardown(){
         driver.quit();
     }
+
+    @DataProvider
+    public static Object[][] treeToGrid() {
+        return new Object[][]{
+                {new String[] {"B", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"}, "B"},
+
+        };
+    }
+
+    @DataProvider
+    public static Object[][] gridToTree() {
+        return new Object[][]{
+                {new String[] {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "U"}, "U"},
+        };
+    }
+
+    @DataProvider
+    public static Object[][] multiGridToTree() {
+        return new Object[][]{
+                {new String[] {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "U", "Z"}, new String[] {"K", "U", "Z"}},
+        };
+    }
+
+    @DataProvider
+    public static Object[][] treeLetters() {
+        return new Object[][]{
+                {"A", "B"}
+        };
+    }
+
+    @DataProvider
+    public static Object[][] gridLetters() {
+        return new Object[][]{
+                {"Z", "U", "K"}
+        };
+    }
+
 
 }
